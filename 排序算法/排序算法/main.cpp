@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include <algorithm>
 using namespace std;
 
@@ -136,31 +136,31 @@ void sort_quick(int* arr, int length) {
 }
 
 //堆排序
-void max_heapify(int* arr, int length) {
-    int dad = 0;
-    int son = dad * 2 + 1;
-    int end = length - 1;
-    while (son <= end) {
-        if (son + 1 <= end && arr[son] < arr[son + 1])
-            ++son;
-        if (arr[dad] > arr[son])
-            return;
-        else {
-            swap(arr[dad], arr[son]);
-            dad = son;
-            son = dad * 2 + 1;
-        }
-    }
+void max_heapify(int arr[], int start, int end) {
+	int dad = start;
+	int son = dad * 2 + 1;
+	while (son <= end) {
+		if (son + 1 <= end && arr[son] < arr[son + 1])
+			son++;
+		if (arr[dad] > arr[son])
+			return;
+		else { 
+			swap(arr[dad], arr[son]);
+			dad = son;
+			son = dad * 2 + 1;
+		}
+	}
 }
-void sort_heap(int* arr, int length) {
-    for (int i = length / 2 - 1; i >= 0; --i) {
-        max_heapify(arr + i, length - i);
-    }
-    for (int i = length - 1; i > 0; --i) {
-        swap(arr[0], arr[i]);
-        max_heapify(arr, i);
-    }
+
+void sort_heap(int arr[], int len) {
+	for (int i = len / 2 - 1; i >= 0; i--)
+		max_heapify(arr, i, len - 1);
+	for (int i = len - 1; i > 0; i--) {
+		swap(arr[0], arr[i]);
+		max_heapify(arr, 0, i - 1);
+	}
 }
+
 
 //计数排序
 void sort_counting(unsigned int* arr, int length) {
@@ -334,13 +334,13 @@ int main() {
     int arr[] = {1, 2, 3, 34,734,233,0,543,31,23, -1, -4};
     int length = sizeof(arr) / sizeof(int);
 
-    sort_maopao(arr, length);  //冒泡排序
+    //sort_maopao(arr, length);  //冒泡排序
     //sort_select(arr, length);  //选择排序
     //sort_insert(arr, length);  //插入排序
     //sort_shell(arr, length);  //希尔排序
     //sort_merge(arr, length);  //归并排序
     //sort_quick(arr, length);  //快速排序
-    //sort_heap(arr, length);  //堆排序
+    sort_heap(arr, length);  //堆排序
     //sort_counting(arr, length);  //计数排序
     //sort_bucket(arr, length);  //桶排序
     //sort_radix(arr, length);  //基数排序
